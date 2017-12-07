@@ -1,5 +1,4 @@
 # BattleTank
 Head-to-head tank fight
 ## Controls
-dunno
-Setting up [Github Account]<https://github.com/JakubRN/BattleTank>
+Setting up [Github Repository for the game](https://github.com/JakubRN/BattleTank)
