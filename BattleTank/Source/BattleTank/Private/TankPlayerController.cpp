@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Tank.h"
 #include "BattleTank.h"
 #include "TankPlayerController.h"
 
@@ -31,7 +32,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (!GetControlledTank()) { return; }
 	FVector HitLocation;
 	if (GetSightRayHitLocation(OUT HitLocation)) {
-		//TODO aim at this point
 		GetControlledTank()->AimAt(HitLocation);
 	}
 }
@@ -49,9 +49,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 			return true;
 		}
 	}
-	//get camera
-	//get crosshair position
-	//place ray through them
 	return false;
 }
 
