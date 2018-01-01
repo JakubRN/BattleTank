@@ -8,7 +8,7 @@
 //Forward declarations
 class UTankBarrel;
 class UTankAimingComponent;
-
+class UTankTurret;
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -25,8 +25,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void setBarrelReference(UTankBarrel *BarrelToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void setTurretReference(UTankTurret *TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Action)
+	void Fire();
+
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 100000;
+		float LaunchSpeed = 4000;
 	void AimAt(FVector HitLocation);
 protected:
 	UTankAimingComponent *TankAimingComponent = nullptr;
