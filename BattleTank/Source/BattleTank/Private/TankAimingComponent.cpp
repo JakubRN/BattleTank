@@ -27,6 +27,7 @@ void UTankAimingComponent::setTurretReference(UTankTurret * TurretToSet)
 	Turret = TurretToSet;
 }
 
+
 void UTankAimingComponent::AimAt(FVector AimLocation, float Launchspeed)
 {
 	if (!Barrel) return;
