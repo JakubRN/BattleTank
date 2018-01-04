@@ -6,17 +6,23 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
+
+
 class ATank;
 
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	ATank *GetControlledTank() const;
+
+
 private:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
-	ATank *GetControlledTank() const;
 	
 	//moves the barrel to aim at the point where crosshair intersects the world
 	void AimTowardsCrosshair();
@@ -30,4 +36,5 @@ private:
 	float CrosshairYLocation = 0.36;
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
+
 };

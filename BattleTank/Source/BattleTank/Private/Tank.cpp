@@ -21,9 +21,9 @@ ATank::ATank()
 
 
 // Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void ATank::SetupPlayerInputComponent(class UInputComponent* CurrentInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(CurrentInputComponent);
 
 }
 
@@ -39,20 +39,11 @@ void ATank::setTurretReference(UTankTurret * TurretToSet)
 	TankAimingComponent->setTurretReference(TurretToSet);
 }
 
-void ATank::setLeftTrackReference(UTankTrack *TrackToSet)
-{
-	LeftTrack = TrackToSet;
-}
-
-void ATank::setRightTrackReference(UTankTrack *TrackToSet)
-{
-	RightTrack = TrackToSet;
-}
-
 void ATank::Fire()
 {
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSec;
 	if (Barrel && isReloaded) {
+
 		LastFireTime = FPlatformTime::Seconds();
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint, 
@@ -65,6 +56,13 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation)
 {
+	if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSec)
+	{
+		if (TankAimingComponent->FiringStatus == EFiringStatus::Reloading) TankAimingComponent->FiringStatus = EFiringStatus::Aiming;
+	}
+	else {
+		if (TankAimingComponent->FiringStatus == EFiringStatus::Aiming) TankAimingComponent->FiringStatus = EFiringStatus::Reloading;
+	}
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 

@@ -17,7 +17,7 @@ class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* CurrentInputComponent) override;
 
 public:
 	// Sets default values for this pawn's properties
@@ -36,12 +36,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void setTurretReference(UTankTurret *TurretToSet);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void setLeftTrackReference(UTankTrack *TrackToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void setRightTrackReference(UTankTrack *TrackToSet);
-
 	UFUNCTION(BlueprintCallable, Category = Action)
 	void Fire();
 
@@ -54,9 +48,8 @@ public:
 
 	void AimAt(FVector HitLocation);
 protected:
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent *TankAimingComponent = nullptr;
 	UTankBarrel *Barrel = nullptr;
-	UTankTrack *LeftTrack = nullptr;
-	UTankTrack *RightTrack = nullptr;
 
 };

@@ -47,8 +47,12 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float Launchspeed)
 		FCollisionResponseParams::DefaultResponseParam, TArray<AActor *>(),
 		false
 	)) {
+		if (FiringStatus == EFiringStatus::Locked) FiringStatus = EFiringStatus::Aiming;
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
+	}
+	else {
+		FiringStatus = EFiringStatus::Locked;
 	}
 }
 
