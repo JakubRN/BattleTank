@@ -33,8 +33,6 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 
 	auto forwardVelocity = FVector::DotProduct(TankForwardVector, MoveDirectionNormal);
 	auto turnVelocity = FVector::CrossProduct(TankForwardVector, MoveDirectionNormal).Z;
-	UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s"), *GetOwner()->GetName(), *MoveVelocity.ToString())
-	UE_LOG(LogTemp, Warning, TEXT("movement: %f forward, %f rotation"), forwardVelocity, turnVelocity)
-	IntendMoveForward(forwardVelocity);
 	IntendTurnRight(turnVelocity);
+	IntendMoveForward(forwardVelocity);
 }

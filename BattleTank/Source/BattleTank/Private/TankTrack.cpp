@@ -5,10 +5,9 @@
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	if ((lastMovementTime == GetWorld()->GetDeltaSeconds()) || FMath::Abs(Throttle) < 0.2) {
+	if ((lastMovementTime == GetWorld()->GetDeltaSeconds()) || FMath::Abs(Throttle) < 0.3) {
 		return;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("THROTTLE:%f"), Throttle);
 	lastMovementTime = GetWorld()->GetDeltaSeconds();
 	Throttle = FMath::Clamp<float>(Throttle, -0.7f, 1.f);
 	auto ForceToApply = GetForwardVector() * TrackMaxDrivingForce * Throttle;
