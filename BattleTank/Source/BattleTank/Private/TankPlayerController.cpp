@@ -9,11 +9,6 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	ATank *ControlledTank = GetControlledTank();
-	if (!ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Tank not posessed"));
-		return;
-	UE_LOG(LogTemp, Warning, TEXT("Hello there %s"), *ControlledTank->GetName());
-	}
 }
 
 void ATankPlayerController::Tick(float DeltaSeconds)

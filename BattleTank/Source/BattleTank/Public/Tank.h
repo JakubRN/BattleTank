@@ -17,13 +17,15 @@ class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
 
+	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
 public:
 	// Sets default values for this pawn's properties
 	ATank();
 
 	// Called to bind functionality to input
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -56,6 +58,5 @@ protected:
 	UTankBarrel *Barrel = nullptr;
 	UTankTrack *LeftTrack = nullptr;
 	UTankTrack *RightTrack = nullptr;
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent *TankMovementComponent = nullptr;
+
 };
