@@ -5,7 +5,7 @@
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	if ((lastMovementTime == GetWorld()->GetDeltaSeconds()) || FMath::Abs(Throttle) < 0.3) {
+	if ((lastMovementTime == GetWorld()->GetDeltaSeconds()) || FMath::Abs(Throttle) < 0.2) {
 		return;
 	}
 	UE_LOG(LogTemp, Warning, TEXT("THROTTLE:%f"), Throttle);
@@ -14,5 +14,4 @@ void UTankTrack::SetThrottle(float Throttle)
 	auto ForceToApply = GetForwardVector() * TrackMaxDrivingForce * Throttle;
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceToApply, GetComponentLocation());
-	//UE_LOG(LogTemp, Warning, TEXT("THROTTLING:%f"), Throttle);
 }

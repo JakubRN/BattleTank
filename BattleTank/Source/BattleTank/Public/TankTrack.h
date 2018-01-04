@@ -20,6 +20,6 @@ public:
 	
 		//Force to drive the tracks
 		UPROPERTY(EditDefaultsOnly, Category = Setup)
-		float TrackMaxDrivingForce = 50000000; // assuming 50T tank
+		float TrackMaxDrivingForce = 100000000; // assuming 50T tank
 		float lastMovementTime = 0.f;
 };
