@@ -16,6 +16,8 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float distanceToPlayer = 7000.f;
 private:
-	float distanceToPlayer = 2000.f;
 };

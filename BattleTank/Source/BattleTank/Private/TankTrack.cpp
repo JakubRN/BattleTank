@@ -8,35 +8,35 @@ UTankTrack::UTankTrack()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+void UTankTrack::BeginPlay()
+{
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
+
+void UTankTrack::ApplySidewaysForce(float DeltaTime)
 {
 	auto SlidingSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
 	auto CorrectionAcceleration = -(SlidingSpeed / DeltaTime) *  GetRightVector();
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration);
-	//TankRoot->AddForceAtLocation(CorrectionForce, GetComponentLocation());
+	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 2;
+	TankRoot->AddForce(CorrectionForce);
+}
+
+void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
+{
+	ApplySidewaysForce(GetWorld()->GetDeltaSeconds());
+	DriveTrack();
+	currentThrottle = 0;
 }
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	if (lastMovementTime == GetWorld()->GetDeltaSeconds()) {
-		return;
-	}
-	
-	if (FMath::Abs(Throttle) > 0.3) {
-		auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-		
-		//auto SlidingSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
-		//auto CorrectionAcceleration = -(SlidingSpeed / GetWorld()->DeltaTimeSeconds) *  GetRightVector();
-		//auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration);
-		//TankRoot->AddForce(CorrectionForce);
+	currentThrottle = FMath::Clamp<float>(currentThrottle + Throttle, -1.f, 1.f);
+}
 
-		lastMovementTime = GetWorld()->GetDeltaSeconds();
-		Throttle = FMath::Clamp<float>(Throttle, -0.85f, 1.f);
-		auto ForceToApply = GetForwardVector() * TankRoot->GetMass() * TrackMaxDrivingAcceleration * Throttle;
-		TankRoot->AddForceAtLocation(ForceToApply, GetComponentLocation());
-
-	}	
-
-
+void UTankTrack::DriveTrack()
+{
+	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	auto ForceToApply = GetForwardVector() * TankRoot->GetMass() * TrackMaxDrivingAcceleration * currentThrottle;
+	TankRoot->AddForceAtLocation(ForceToApply, GetComponentLocation());
 }

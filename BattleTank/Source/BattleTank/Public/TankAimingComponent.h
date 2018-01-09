@@ -36,10 +36,12 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+	EFiringStatus GetFiringState();
+
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000;
+	float LaunchSpeed = 10000;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	double ReloadTimeInSec = 3;
 	double LastFireTime = 0;
@@ -51,5 +53,6 @@ private:
 	FVector AimDirection;
 	void MoveBarrel();
 	bool IsBarrelMoving();
+	static constexpr float aimingPrecision = 0.03; // manipulating this number changes AI's precision
 	
 };

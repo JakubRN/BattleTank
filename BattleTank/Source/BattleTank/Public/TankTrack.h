@@ -12,15 +12,23 @@ UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
+private:
 	UTankTrack();
-	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	virtual void BeginPlay() override;
+	void ApplySidewaysForce(float DeltaTime);
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
 public:
 		//Sets a throttle between -1 and 1
 		UFUNCTION(BlueprintCallable, Category = Input)
 		void SetThrottle(float Throttle);
+
+		void DriveTrack();
 	
 		//Force to drive the tracks
 		UPROPERTY(EditDefaultsOnly, Category = Setup)
-		float TrackMaxDrivingAcceleration = 1000;
+		float TrackMaxDrivingAcceleration = 800;
 		float lastMovementTime = 0.f;
+		float currentThrottle = 0;
 };
