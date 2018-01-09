@@ -22,7 +22,6 @@ void ATankAIController::Tick(float DeltaSeconds)
 		auto aimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 		aimingComponent->AimAt(PlayerTank->GetActorLocation());
 		if (aimingComponent->GetFiringState() == EFiringStatus::Locked) {
-			UE_LOG(LogTemp, Warning, TEXT("AI FIRING"))
 			aimingComponent->Fire();
 		}
 	}
