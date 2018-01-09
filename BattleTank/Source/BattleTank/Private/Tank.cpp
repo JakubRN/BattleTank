@@ -7,42 +7,29 @@
 #include "TankTurret.h"
 #include "Projectile.h"
 #include "TankTrack.h"
-#include "TankMovementComponent.h"
 
 // Sets default values
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Hoho Movement Component"));
+}
+void ATank::BeginPlay() {
+	Super::BeginPlay();
 }
 
-
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(class UInputComponent* CurrentInputComponent)
+void ATank::Initialise(UTankBarrel * BarrelToSet, UTankAimingComponent * AimingToSet)
 {
-	Super::SetupPlayerInputComponent(CurrentInputComponent);
-
-}
-
-
-void ATank::setBarrelReference(UTankBarrel * BarrelToSet)
-{
-	TankAimingComponent->setBarrelReference(BarrelToSet);
 	Barrel = BarrelToSet;
+	TankAimingComponent = AimingToSet;
 }
 
-void ATank::setTurretReference(UTankTurret * TurretToSet)
-{
-	TankAimingComponent->setTurretReference(TurretToSet);
-}
 
 void ATank::Fire()
 {
+	if (!ensure(Barrel)) return;
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSec;
-	if (Barrel && isReloaded) {
+	if (isReloaded) {
 
 		LastFireTime = FPlatformTime::Seconds();
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(

@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,19 +9,16 @@ class UTankBarrel;
 class UTankAimingComponent;
 class UTankTurret;
 class UTankTrack;
-class UTankMovementComponent;
 class AProjectile;
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* CurrentInputComponent) override;
-
 public:
 	// Sets default values for this pawn's properties
 	ATank();
-
+	virtual void BeginPlay() override;
 	// Called to bind functionality to input
 
 
@@ -31,10 +27,7 @@ public:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void setBarrelReference(UTankBarrel *BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void setTurretReference(UTankTurret *TurretToSet);
+		void Initialise(UTankBarrel *BarrelToSet, UTankAimingComponent *AimingToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Action)
 	void Fire();

@@ -19,5 +19,5 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 private:
-	float distanceToPlayer = 9000.f;
+	float distanceToPlayer = 2000.f;
 };

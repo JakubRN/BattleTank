@@ -29,6 +29,5 @@ private:
 
 	UTankTrack *LeftTrack = nullptr;
 	UTankTrack *RightTrack = nullptr;
-	float lastForwardMovementTime = 0.f;
 	float lastRotateTime = 0.f;
 };
