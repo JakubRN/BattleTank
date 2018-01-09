@@ -21,7 +21,12 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 	void launchProjectile(float Speed);
-
+protected:
+	UPROPERTY(VisibleAnywhere, Category = "components")
+		UStaticMeshComponent *CollisionMesh = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "components")
+		UParticleSystemComponent *LaunchBlast = nullptr;
 private:
 	UProjectileMovementComponent *ProjectileMovement = nullptr;
+
 };

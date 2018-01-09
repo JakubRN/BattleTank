@@ -44,12 +44,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 10000;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	double ReloadTimeInSec = 3;
+	float ReloadTimeInSec = 3;
 	double LastFireTime = 0;
 protected:
 
 private:
-	uint8 ammoLeft = 5;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 ammoLeft = 5;
 	UTankBarrel *Barrel = nullptr;
 	UTankTurret *Turret = nullptr;
 	FVector AimDirection;
