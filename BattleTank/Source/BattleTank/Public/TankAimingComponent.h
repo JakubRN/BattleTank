@@ -7,7 +7,8 @@ UENUM()
 enum class EFiringStatus : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	NoAmmo
 };
 
 #include "Components/ActorComponent.h"
@@ -32,11 +33,11 @@ public:
 		void Fire();
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void AimAt(FVector AimLocation);
-
-
 	UPROPERTY(BlueprintReadOnly)
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 	EFiringStatus GetFiringState();
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	uint8 GetAmmoLeft() const;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -48,6 +49,7 @@ public:
 protected:
 
 private:
+	uint8 ammoLeft = 5;
 	UTankBarrel *Barrel = nullptr;
 	UTankTurret *Turret = nullptr;
 	FVector AimDirection;
