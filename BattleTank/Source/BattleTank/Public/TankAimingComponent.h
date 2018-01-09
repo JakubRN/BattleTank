@@ -21,6 +21,8 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	virtual void BeginPlay() override;
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
@@ -46,6 +48,8 @@ protected:
 private:
 	UTankBarrel *Barrel = nullptr;
 	UTankTurret *Turret = nullptr;
-	void MoveBarrel(FVector AimDirection);
+	FVector AimDirection;
+	void MoveBarrel();
+	bool IsBarrelMoving();
 	
 };

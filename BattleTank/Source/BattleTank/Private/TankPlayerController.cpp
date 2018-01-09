@@ -10,10 +10,6 @@ void ATankPlayerController::BeginPlay()
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (ensure(AimingComponent)) {
 		FoundAimingComponent(AimingComponent);
-
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Aiming Component not found at beginPlay of playercontroller"));
 	}
 }
 
