@@ -4,7 +4,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
-
+#include "Projectile.h"
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
@@ -21,8 +21,29 @@ void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * T
 	Turret = TurretToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector AimLocation, float Launchspeed)
+void UTankAimingComponent::Fire() {
+
+	if (!ensure(Barrel)) return;
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSec;
+	if (isReloaded) {
+
+		LastFireTime = FPlatformTime::Seconds();
+		auto projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile")));
+		projectile->launchProjectile(LaunchSpeed);
+	}
+}
+void UTankAimingComponent::AimAt(FVector AimLocation)
 {
+	if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSec)
+	{
+		if (FiringStatus == EFiringStatus::Reloading) FiringStatus = EFiringStatus::Aiming;
+	}
+	else {
+		if (FiringStatus == EFiringStatus::Aiming) FiringStatus = EFiringStatus::Reloading;
+	}
 	if (!ensure(Barrel && Turret)) return;
 	FVector OutLaunchVelocity;
 	auto StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -32,7 +53,7 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float Launchspeed)
 		OutLaunchVelocity,
 		StartLocation,
 		AimLocation,
-		Launchspeed,
+		LaunchSpeed,
 		false,
 		0.0F,
 		0.0F,
