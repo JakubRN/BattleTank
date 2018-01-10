@@ -20,14 +20,21 @@ public:
 	void launchProjectile(float Speed);
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
-protected:
-	UPROPERTY(VisibleAnywhere, Category = "components")
-		UStaticMeshComponent *CollisionMesh = nullptr;
-	UPROPERTY(VisibleAnywhere, Category = "components")
-		UParticleSystemComponent *LaunchBlast = nullptr;
-	UPROPERTY(VisibleAnywhere, Category = "components")
-		UParticleSystemComponent *ImpactBlast = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float ProjectileDamage = 20;
 private:
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		UStaticMeshComponent *CollisionMesh = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		UParticleSystemComponent *LaunchBlast = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		UParticleSystemComponent *ImpactBlast = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		URadialForceComponent *ExplosionForce = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float DelayToDelete = 3.f;
+	void TimeToDestroy();
 	UProjectileMovementComponent *ProjectileMovement = nullptr;
+
 
 };

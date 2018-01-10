@@ -14,9 +14,11 @@ class BATTLETANK_API ATankAIController : public AAIController
 public:
 	ATankAIController();
 	virtual void BeginPlay() override;
-
 	virtual void Tick(float DeltaSeconds) override;
+	virtual void SetPawn(APawn *InPawn) override;
 protected:
+	UFUNCTION()
+	void OnTankDead();
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float distanceToPlayer = 7000.f;
 private:

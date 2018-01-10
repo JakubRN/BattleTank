@@ -12,14 +12,17 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+	virtual void SetPawn(APawn *InPawn) override;
+	
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent *AimingComponentReference);
+	UFUNCTION()
+		void OnTankDead();
 private:
-	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaSeconds) override;
-	
 	//moves the barrel to aim at the point where crosshair intersects the world
 	void AimTowardsCrosshair();
 
