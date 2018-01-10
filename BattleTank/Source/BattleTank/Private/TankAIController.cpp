@@ -20,7 +20,7 @@ void ATankAIController::Tick(float DeltaSeconds)
 	if (ensure(PlayerTank && ControlledTank)) {
 		MoveToActor(PlayerTank, distanceToPlayer);
 		auto aimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-		aimingComponent->AimAt(PlayerTank->GetActorLocation());
+		aimingComponent->AimAt(PlayerTank->GetActorLocation() + FVector(0,0,100));
 		if (aimingComponent->GetFiringState() == EFiringStatus::Locked) {
 			aimingComponent->Fire();
 		}
