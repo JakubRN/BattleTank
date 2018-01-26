@@ -10,7 +10,7 @@ Switch camera with 'T' key
 ## Launch Project
 Game should be launched from the default level which is Main_Menu.
 
-Game was made in Unreal Version 4.14.
+Game was made in Unreal Version 4.14.2
 
 It is not advised to upgrade it before succesful compilation in this version.
 
